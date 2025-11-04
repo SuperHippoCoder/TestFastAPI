@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 from ..database import get_db
-from ..services.product_service import ProductService
+from ..services.product_service import ProductService, ProductCreate
 from ..schemas.product import ProductResponse, ProductListResponse
 
 router = APIRouter(
@@ -23,3 +23,18 @@ def get_product(product_id: int, db: Session = Depends(get_db)):
 def get_products_by_category(category_id: int, db: Session = Depends(get_db)):
     service = ProductService(db)
     return service.get_products_by_category(category_id)
+
+@router.post("", response_model=ProductResponse, status_code=status.HTTP_201_CREATED)
+def create_product(product_data: ProductCreate, db: Session = Depends(get_db)):
+    service = ProductService(db)
+    return service.create_product(product_data)
+
+@router.put("/{product_id}", response_model=ProductResponse)
+def update_product(product_id: int, product_data: ProductCreate, db: Session = Depends(get_db)):
+    service = ProductService(db)
+    return service.update_product(product_id, product_data)
+
+@router.delete("/{product_id}", status_code=204)
+def delete_product(product_id: int, db: Session = Depends(get_db)):
+    service = ProductService(db)
+    service.delete_product(product_id)

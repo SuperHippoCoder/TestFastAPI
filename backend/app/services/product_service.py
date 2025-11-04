@@ -46,3 +46,28 @@ class ProductService:
 
         product = self.product_repository.create(product_data)
         return ProductResponse.model_validate(product)
+    
+    def update_product(self, product_id: int, product_data: ProductCreate) -> ProductResponse:
+        product = self.product_repository.get_by_id(product_id)
+        if not product:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Product with id {product_id} does not exist"
+            )
+        category = self.category_repository.get_by_id(product_data.category_id)
+        if not category:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Category with id {product_data.category_id} does not exist"
+            )
+        product = self.product_repository.update(product_id=product_id, product_data=product_data)
+        return ProductResponse.model_validate(product)
+    
+    def delete_product(self, product_id: int) -> ProductListResponse:
+        product = self.product_repository.get_by_id(product_id)
+        if not product:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Product with id {product_id} does not exist"
+            )
+        self.product_repository.delete(product_id=product_id)

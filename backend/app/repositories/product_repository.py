@@ -40,3 +40,22 @@ class ProductRepository:
             .filter(Product.id.in_(product_ids))
             .all()
         )
+    
+    def update(self, product_id: int, product_data: ProductCreate) -> Product:
+        product = self.get_by_id(product_id)
+        if not product:
+            return None
+        data = product_data.model_dump()
+        for field, value in data.items():
+            setattr(product, field, value)
+        self.db.commit()
+        self.db.refresh(product)
+        return product
+    
+    def delete(self, product_id: int) -> bool:
+        product = self.get_by_id(product_id)
+        if not product:
+            return False
+        self.db.delete(product)
+        self.db.commit()
+        return True
