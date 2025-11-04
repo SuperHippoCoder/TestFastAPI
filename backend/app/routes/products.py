@@ -37,4 +37,5 @@ def update_product(product_id: int, product_data: ProductCreate, db: Session = D
 @router.delete("/{product_id}", status_code=204)
 def delete_product(product_id: int, db: Session = Depends(get_db)):
     service = ProductService(db)
-    service.delete_product(product_id)
+    list = service.delete_product(product_id)
+    return list

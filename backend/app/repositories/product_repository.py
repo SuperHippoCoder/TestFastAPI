@@ -52,10 +52,10 @@ class ProductRepository:
         self.db.refresh(product)
         return product
     
-    def delete(self, product_id: int) -> bool:
+    def delete(self, product_id: int) -> List[Product]:
         product = self.get_by_id(product_id)
         if not product:
             return False
         self.db.delete(product)
         self.db.commit()
-        return True
+        return self.get_all()

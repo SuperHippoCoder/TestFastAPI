@@ -22,3 +22,22 @@ class CategoryRepository:
         self.db.commit() 
         self.db.refresh(db_category)
         return db_category
+    
+    def update(self, category_id: int, category_data: CategoryCreate) -> Category:
+        product = self.get_by_id(category_id)
+        if not product:
+            return None
+        data = category_data.model_dump()
+        for field, value in data.items():
+            setattr(product, field, value)
+        self.db.commit()
+        self.db.refresh(product)
+        return product
+    
+    def delete(self, category_id: int) -> List[Category]:
+        product = self.get_by_id(category_id)
+        if not product:
+            return False
+        self.db.delete(product)
+        self.db.commit()
+        return True

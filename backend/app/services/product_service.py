@@ -70,4 +70,6 @@ class ProductService:
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail=f"Product with id {product_id} does not exist"
             )
-        self.product_repository.delete(product_id=product_id)
+        new_list = self.product_repository.delete(product_id=product_id)
+        products_response = [ProductResponse.model_validate(prod) for prod in new_list]
+        return ProductListResponse(products=products_response, total=len(products_response))
