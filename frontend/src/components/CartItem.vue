@@ -24,7 +24,7 @@
         <h3 class="text-lg font-bold text-black mb-2">
           {{ item.name }}
         </h3>
-        <p class="text-gray-600 text-sm mb-3">${{ item.price.toFixed(2) }} each</p>
+        <p class="text-gray-600 text-sm mb-3">₽{{ item.price.toFixed(2) }} each</p>
 
         <!-- Управление количеством -->
         <div class="flex items-center gap-4">
@@ -102,7 +102,7 @@
 
       <!-- Сумма -->
       <div class="text-right">
-        <p class="text-xl font-bold text-black">${{ item.subtotal.toFixed(2) }}</p>
+        <p class="text-xl font-bold text-black">₽{{ item.subtotal.toFixed(2) }}</p>
       </div>
     </div>
   </div>

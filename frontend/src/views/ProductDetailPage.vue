@@ -76,7 +76,7 @@
 
             <!-- Цена -->
             <div class="text-2xl sm:text-3xl font-bold text-black mb-6">
-              ${{ product.price.toFixed(2) }}
+              ₽{{ product.price.toFixed(2) }}
             </div>
 
             <!-- Описание -->

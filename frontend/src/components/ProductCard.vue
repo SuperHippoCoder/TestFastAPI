@@ -35,7 +35,7 @@
       </router-link>
 
       <!-- Цена -->
-      <p class="text-2xl font-bold text-black mb-4">${{ product.price.toFixed(2) }}</p>
+      <p class="text-2xl font-bold text-black mb-4">₽{{ product.price.toFixed(2) }}</p>
 
       <!-- Кнопка добавления в корзину -->
       <button
