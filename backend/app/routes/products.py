@@ -24,17 +24,17 @@ def get_products_by_category(category_id: int, db: Session = Depends(get_db)):
     service = ProductService(db)
     return service.get_products_by_category(category_id)
 
-@router.post("", response_model=ProductResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/create", response_model=ProductResponse, status_code=status.HTTP_201_CREATED)
 def create_product(product_data: ProductCreate, db: Session = Depends(get_db)):
     service = ProductService(db)
     return service.create_product(product_data)
 
-@router.put("/{product_id}", response_model=ProductResponse)
+@router.put("/update/{product_id}", response_model=ProductResponse)
 def update_product(product_id: int, product_data: ProductCreate, db: Session = Depends(get_db)):
     service = ProductService(db)
     return service.update_product(product_id, product_data)
 
-@router.delete("/{product_id}", status_code=204)
+@router.delete("/delete/{product_id}", status_code=204)
 def delete_product(product_id: int, db: Session = Depends(get_db)):
     service = ProductService(db)
     list = service.delete_product(product_id)
