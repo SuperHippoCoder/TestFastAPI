@@ -29,6 +29,13 @@
 
         <!-- Навигация -->
         <nav class="flex items-center space-x-8">
+        <button
+        @click="addProduct"
+        class="px-4 py-3 rounded-lg bg-black text-white font-semibold hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black transition-transform duration-200 hover:scale-105"
+         >
+        Add product
+         </button>
+          
           <!-- Ссылка на каталог -->
           <router-link
             to="/"
