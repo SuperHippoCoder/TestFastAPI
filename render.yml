@@ -1,0 +1,37 @@
+services:
+  # ---------------------
+  # BACKEND (FastAPI)
+  # ---------------------
+  - type: web
+    name: fashop-backend
+    env: docker
+    plan: free                       # можно starter, если хочешь БД или стабильность
+    dockerfilePath: backend/Dockerfile
+    dockerContext: .
+    envVars:
+      - key: APP_NAME
+        value: FastAPI Shop
+      - key: DEBUG
+        value: False
+      - key: DATABASE_URL
+        value: sqlite:///./shop.db
+      - key: CORS_ORIGINS
+        # Укажи домен фронтенда (Render позже даст точный URL)
+        value: https://fashop-frontend.onrender.com
+    healthCheckPath: /docs           # FastAPI docs endpoint
+    autoDeploy: true                 # автоматическое обновление при пуше в main
+
+  # ---------------------
+  # FRONTEND (Vite)
+  # ---------------------
+  - type: web
+    name: fashop-frontend
+    env: docker
+    plan: free
+    dockerfilePath: frontend/Dockerfile
+    dockerContext: ./frontend
+    envVars:
+      - key: VITE_API_BASE_URL
+        # Ссылка на backend, обнови после деплоя backend'а
+        value: https://fashop-backend.onrender.com/api
+    autoDeploy: true
